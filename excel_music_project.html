@@ -65,6 +65,54 @@
 									</p>
 									<p><span class="image"><img src="images\music project PowerQuery rs200 csv.jpg"/></span></p>
 
+									<h3 class="major">Chord Data</h3>
+									<p>
+										Trevor and David have provided the chord data a file for each song.
+										There are two versions of each file, one ending in _dt, one ending in _tdc.
+										This is because both Trevor and David did the harmonic analysis for each song. Since chord sequences can be subjective, there may be differences between their analysis.
+									</p>
+									<p><span class="image"><img src="images\chord_data_folder.png"/></span></p>
+									<p>
+										To perform analysis, we will need to import this data into Excel and combine it into one table.
+										We do this by importing from a folder as follows:
+									</p>
+									<p><span class="image"><img src="images\powerquery_importing_from_folder.png"/></span></p>
+									<p>
+										This automates most of the hard work to import and merge all these files. And after a little renaming of columns we get the following,
+									</p>
+									<p><span class="image"><img src="images\powerquery_imported_and_merged_chord_data.png"/></span></p>
+									
+									<h4 class="minor">Splitting the Filename into its components</h4>
+									<p>
+										There's one last thing to do before we can import this into the work sheet.
+										The filename field effectively contains two fields worth of data: the song id as appears in RS200.csv, and the person who did the analysis.
+									</p>
+									<p>
+										Before parsing the filename text, I duplicated the column. This way I could be sure to keep the original filename data.
+										Then, I split the column by the last "_" delimiter to separate the song id from the author initials. Finally, I removed the .clt extension by extracting the text before the delimiter.
+										These operations can be found in PowerQuery in the transform tab, as seen below.
+									</p>
+									
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-6"><span class="image fit"><img src="images\split_column_by_delimiter.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\split_filename_into_key_and_author.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\extract_text_before_delimiter.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\remove_file_format.png" alt="" /></span></div>
+											<div class="col-12"><span class="image fit"><img src="images\separated_filename.png" alt="" /></span></div>
+										</div>
+									</div>
+									<p>
+										In general, you need to be careful when parsing text like this. If the delimiters aren't exactly where you expect them, then the text won't split like you expect.
+										In this case the filenames are structured enough that we can be sure of exactly how it will split.
+									</p>
+									<p>There we go, we've successfully imported, aggregated, and cleaned our data. The final table of chord data has 36,970 rows. PowerQuery made that much easier than it had any right to be. Next we will validate the data, and finally we will perform some simple analysis.</p>
+
+									<h3 class="major">Data Validation</h3>
+									<p>Lorm Ipsum</p>
+
+									<h3 class="major">Basic Analysis and Visualisation</h3>
+									<p>Lorm Ipsum</p>
 								</div>
 							</div>
 
