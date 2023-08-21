@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Finn's Portfolio Site</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">Finn's Projects Portfolio</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="all_projects.html">All Projects</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Excel: Aggregating and Cleaning Chord data from Rock Songs</h2>
+								<p>A quick demonstration of using PowerQuery to quickly import and merge data from several files. By the end we have the data in a format friendly to Pivot Tables.</p>
+								<a href="https://1drv.ms/x/s!AiwUeFDGVIfLg9Vs9tYdzq9BWXQWjg?e=Ve4Esq" class="special">Excel Workbook (Connections and queries removed)</a>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Data Source</h3>
+									<p>
+										This project uses data from <a href="http://rockcorpus.midside.com/index.html"><i>A Corpus Study of Rock Music</i>, by Trevor de Clerq and David Temperley</a>.
+										This project analysed the top 200 songs from the <a href="https://www.rollingstone.com/">Rolling Stone magazine's</a> list of the <a href="http://web.archive.org/web/20080622145429/www.rollingstone.com/news/coverstory/500songs">"500 Greatest Songs of All Time"</a>, providing a transcription of the melody and a harmonic analysis.
+										I will be importing and cleaning this data into excel.
+									</p>
+									<p>There are two main parts to the data:
+										<ul>
+											<li>rs200.csv, which holds data about the songs such as the title and artist.</li>
+											<li>The harmonic analysis data. This holds the chord data, and each song has it's own file.</li>
+										</ul></p>
+
+									<h3 class="major">RS200.csv</h3>
+									<p>
+										Trevor and David have provided a csv file, <code>RS200.csv</code>, with data about the releases.
+										This part of the data is very easy to clean, after importing with Power Query, all we need to do is set the column titles.
+										I have removed the last column in the file, which stated if the song was present in a previous dataset. This isn't needed for our analysis.
+										The before and after of this file can be seen below.
+									</p>
+									<p><span class="image"><img src="images\music project PowerQuery rs200 csv.jpg"/></span></p>
+
+									<h3 class="major">Chord Data</h3>
+									<p>
+										Trevor and David have provided the chord data a file for each song.
+										There are two versions of each file, one ending in _dt, one ending in _tdc.
+										This is because both Trevor and David did the harmonic analysis for each song. Since chord sequences can be subjective, there may be differences between their analysis.
+									</p>
+									<p><span class="image"><img src="images\chord_data_folder.png"/></span></p>
+									<p>
+										Each file contains timing and harmonic data. For example, the first few lines of 1999_dt.clt are,
+										<pre><code>
+18.774	7.00	I64	0	1	5	5
+19.784	7.50	V11	7	5	5	0
+20.795	8.00	I64	0	1	5	5
+21.812	8.50	V11	7	5	5	0
+22.830	9.00	I64	0	1	5	5
+23.838	9.50	V11	7	5	5	0
+24.847	10.00	I64	0	1	5	5
+										</code></pre>
+										To all this data from individual files by import each one would be a pain. Fortunately, Excel's PowerQuery has just the tool to deal with this:
+									</p>
+									<p><span class="image"><img src="images\powerquery_importing_from_folder.png"/></span></p>
+									<p>
+										This automates most of the hard work to import and merge all these files. Excel autodetects the data format perfectly in this case.
+										And after a little renaming of columns, (and sorting to show that the data from each file has indeed been merged) we get the following,
+									</p>
+									<p><span class="image"><img src="images\powerquery_imported_and_merged_chord_data.png"/></span></p>
+									
+									<h4 class="minor">Splitting the Filename into its components</h4>
+									<p>
+										There's one last thing to do before we can import this into the work sheet.
+										The filename field effectively contains two fields worth of data: the song id as appears in RS200.csv, and the person who did the analysis.
+									</p>
+									<p>
+										Before parsing the filename text, I duplicated the column. This way I could be sure to keep the original filename data.
+										Then, I split the column by the last "_" delimiter to separate the song id from the author initials. Finally, I removed the .clt extension by extracting the text before the delimiter.
+										These operations can be found in PowerQuery in the transform tab, as seen below.
+									</p>
+									
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-6"><span class="image fit"><img src="images\split_column_by_delimiter.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\split_filename_into_key_and_author.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\extract_text_before_delimiter.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\remove_file_format.png" alt="" /></span></div>
+											<div class="col-12"><span class="image fit"><img src="images\separated_filename.png" alt="" /></span></div>
+										</div>
+									</div>
+									<p>
+										In general, you need to be careful when parsing text like this. If the delimiters aren't exactly where you expect them, then the text won't split like you expect.
+										In this case the filenames are structured enough that we can be sure of exactly how it will split.
+									</p>
+									<p>
+										There we go, we've successfully imported, aggregated, and cleaned our data. The final table of chord data has 36,970 rows. PowerQuery made that much easier than it had any right to be.
+										With this data we can perform some analysis. For example, visualising the chords of a single song.
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_progression.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_chord_distribution.png" alt="" /></span></div>
+									</div>
+										Or, analysing data from all songs to find trends in what chords or keys are popular.
+									<div class="box alt">
+										<div class="row gtr-uniform">
+											<div class="col-6"><span class="image fit"><img src="images\most used chords.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\all_songs_key_distribution.png" alt="" /></span></div>
+									</div>
+									</p>
+									<p>
+										There's a lot of interesting stuff you could do with this data. But since this project was just about aggregating and cleaning data I'll leave it here.
+										Perhaps in the future I'll come back and find patterns or insights in this data. Such as what cadences are popular, or how use of certain keys/chords change over time.
+										If you want to have a play with the spreadsheet, you can find a link to it at the top of the page.
+									</p>
+
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+				<section id="footer">
+					<div class="inner">
+						<ul class="contact">
+							<li class="icon solid fa-home">
+								Christchurch, New Zealand
+							</li>
+							<li class="icon solid fa-envelope"><a href="mailto:okeeffefinn@gmail.com">okeeffefinn@gmail.com</a></li>
+							<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/finn-okeeffe/">linkedin.com/in/finn-okeeffe/</a></li>
+							<li class="icon brands fa-github"><a href="https://github.com/finn-okeeffe">finn-okeeffe</a></li>
+						</ul>
+						<ul class="copyright">
+							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							<li><a href="https://github.com/finn-okeeffe/finn-okeeffe.github.io">Website GitHub Repo</a></li>
+						</ul>
+					</div>
+				</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
