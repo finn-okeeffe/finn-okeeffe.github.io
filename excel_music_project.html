@@ -42,7 +42,8 @@
 						<header>
 							<div class="inner">
 								<h2>Excel: Aggregating and Cleaning Chord data from Rock Songs</h2>
-								<p>Phasellus non pulvinar erat. Fusce tincidunt nisl eget ipsum.</p>
+								<p>A quick demonstration of using PowerQuery to quickly import and merge data from several files. By the end we have the data in a format friendly to Pivot Tables.</p>
+								<a href="https://1drv.ms/x/s!AiwUeFDGVIfLg9Vs9tYdzq9BWXQWjg?e=Ve4Esq" class="special">Excel Workbook (Connections and queries removed)</a>
 							</div>
 						</header>
 
@@ -54,7 +55,13 @@
 									<p>
 										This project uses data from <a href="http://rockcorpus.midside.com/index.html"><i>A Corpus Study of Rock Music</i>, by Trevor de Clerq and David Temperley</a>.
 										This project analysed the top 200 songs from the <a href="https://www.rollingstone.com/">Rolling Stone magazine's</a> list of the <a href="http://web.archive.org/web/20080622145429/www.rollingstone.com/news/coverstory/500songs">"500 Greatest Songs of All Time"</a>, providing a transcription of the melody and a harmonic analysis.
+										I will be importing and cleaning this data into excel.
 									</p>
+									<p>There are two main parts to the data:
+										<ul>
+											<li>rs200.csv, which holds data about the songs such as the title and artist.</li>
+											<li>The harmonic analysis data. This holds the chord data, and each song has it's own file.</li>
+										</ul></p>
 
 									<h3 class="major">RS200.csv</h3>
 									<p>
@@ -73,12 +80,22 @@
 									</p>
 									<p><span class="image"><img src="images\chord_data_folder.png"/></span></p>
 									<p>
-										To perform analysis, we will need to import this data into Excel and combine it into one table.
-										We do this by importing from a folder as follows:
+										Each file contains timing and harmonic data. For example, the first few lines of 1999_dt.clt are,
+										<pre><code>
+18.774	7.00	I64	0	1	5	5
+19.784	7.50	V11	7	5	5	0
+20.795	8.00	I64	0	1	5	5
+21.812	8.50	V11	7	5	5	0
+22.830	9.00	I64	0	1	5	5
+23.838	9.50	V11	7	5	5	0
+24.847	10.00	I64	0	1	5	5
+										</code></pre>
+										To all this data from individual files by import each one would be a pain. Fortunately, Excel's PowerQuery has just the tool to deal with this:
 									</p>
 									<p><span class="image"><img src="images\powerquery_importing_from_folder.png"/></span></p>
 									<p>
-										This automates most of the hard work to import and merge all these files. And after a little renaming of columns we get the following,
+										This automates most of the hard work to import and merge all these files. Excel autodetects the data format perfectly in this case.
+										And after a little renaming of columns, (and sorting to show that the data from each file has indeed been merged) we get the following,
 									</p>
 									<p><span class="image"><img src="images\powerquery_imported_and_merged_chord_data.png"/></span></p>
 									
@@ -108,20 +125,23 @@
 									</p>
 									<p>
 										There we go, we've successfully imported, aggregated, and cleaned our data. The final table of chord data has 36,970 rows. PowerQuery made that much easier than it had any right to be.
-										With this data we can perform some analysis. For example, visualising the chords of a single song,
-										
+										With this data we can perform some analysis. For example, visualising the chords of a single song.
 									<div class="box alt">
 										<div class="row gtr-uniform">
 											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_progression.png" alt="" /></span></div>
 											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_chord_distribution.png" alt="" /></span></div>
 									</div>
-										or, analysing data from all songs.
-										
+										Or, analysing data from all songs to find trends in what chords or keys are popular.
 									<div class="box alt">
 										<div class="row gtr-uniform">
-											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_progression.png" alt="" /></span></div>
-											<div class="col-6"><span class="image fit"><img src="images\dancing_queen_chord_distribution.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\most used chords.png" alt="" /></span></div>
+											<div class="col-6"><span class="image fit"><img src="images\all_songs_key_distribution.png" alt="" /></span></div>
 									</div>
+									</p>
+									<p>
+										There's a lot of interesting stuff you could do with this data. But since this project was just about aggregating and cleaning data I'll leave it here.
+										Perhaps in the future I'll come back and find patterns or insights in this data. Such as what cadences are popular, or how use of certain keys/chords change over time.
+										If you want to have a play with the spreadsheet, you can find a link to it at the top of the page.
 									</p>
 
 								</div>
